@@ -1,0 +1,112 @@
+{
+	"$schema": "http://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"type": "string",
+			"metadata": "Data Factory name",
+			"defaultValue": "adfrestuajisukma"
+		},
+		"ADLS_restu_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'ADLS_restu'"
+		},
+		"Sql_restu_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Sql_restu'"
+		},
+		"sql_LAPTOP_7RUN3K07_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'sql_LAPTOP_7RUN3K07'"
+		},
+		"ADLS_restu_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://storageaccrestu.dfs.core.windows.net/"
+		},
+		"Sql_restu_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "restuajisukma.database.windows.net"
+		},
+		"Sql_restu_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "data"
+		},
+		"Sql_restu_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "admin_restu"
+		},
+		"sql_LAPTOP_7RUN3K07_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "LAPTOP-7RUN3K07"
+		},
+		"sql_LAPTOP_7RUN3K07_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "AdventureWorks2022"
+		},
+		"sql_LAPTOP_7RUN3K07_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "sa"
+		},
+		"containerUri": {
+			"type": "string",
+			"metadata": "URI to storage account containing linked ARM templates"
+		},
+		"containerSasToken": {
+			"type": "string",
+			"metadata": "Sas token to storage account containing linked ARM templates"
+		}
+	},
+	"variables": {
+		"factoryId": "[concat('Microsoft.DataFactory/factories/', parameters('factoryName'))]"
+	},
+	"resources": [
+		{
+			"name": "adfrestuajisukma_ArmTemplate_0",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_0.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					},
+					"ADLS_restu_accountKey": {
+						"value": "[parameters('ADLS_restu_accountKey')]"
+					},
+					"Sql_restu_password": {
+						"value": "[parameters('Sql_restu_password')]"
+					},
+					"sql_LAPTOP_7RUN3K07_password": {
+						"value": "[parameters('sql_LAPTOP_7RUN3K07_password')]"
+					},
+					"ADLS_restu_properties_typeProperties_url": {
+						"value": "[parameters('ADLS_restu_properties_typeProperties_url')]"
+					},
+					"Sql_restu_properties_typeProperties_server": {
+						"value": "[parameters('Sql_restu_properties_typeProperties_server')]"
+					},
+					"Sql_restu_properties_typeProperties_database": {
+						"value": "[parameters('Sql_restu_properties_typeProperties_database')]"
+					},
+					"Sql_restu_properties_typeProperties_userName": {
+						"value": "[parameters('Sql_restu_properties_typeProperties_userName')]"
+					},
+					"sql_LAPTOP_7RUN3K07_properties_typeProperties_server": {
+						"value": "[parameters('sql_LAPTOP_7RUN3K07_properties_typeProperties_server')]"
+					},
+					"sql_LAPTOP_7RUN3K07_properties_typeProperties_database": {
+						"value": "[parameters('sql_LAPTOP_7RUN3K07_properties_typeProperties_database')]"
+					},
+					"sql_LAPTOP_7RUN3K07_properties_typeProperties_userName": {
+						"value": "[parameters('sql_LAPTOP_7RUN3K07_properties_typeProperties_userName')]"
+					}
+				}
+			},
+			"dependsOn": []
+		}
+	]
+}

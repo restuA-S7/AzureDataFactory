@@ -1,0 +1,45 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"factoryName": {
+			"value": "adfrestuajisukma"
+		},
+		"ADLS_restu_accountKey": {
+			"value": ""
+		},
+		"Sql_restu_password": {
+			"value": ""
+		},
+		"sql_LAPTOP_7RUN3K07_password": {
+			"value": ""
+		},
+		"ADLS_restu_properties_typeProperties_url": {
+			"value": "https://storageaccrestu.dfs.core.windows.net/"
+		},
+		"Sql_restu_properties_typeProperties_server": {
+			"value": "restuajisukma.database.windows.net"
+		},
+		"Sql_restu_properties_typeProperties_database": {
+			"value": "data"
+		},
+		"Sql_restu_properties_typeProperties_userName": {
+			"value": "admin_restu"
+		},
+		"sql_LAPTOP_7RUN3K07_properties_typeProperties_server": {
+			"value": "LAPTOP-7RUN3K07"
+		},
+		"sql_LAPTOP_7RUN3K07_properties_typeProperties_database": {
+			"value": "AdventureWorks2022"
+		},
+		"sql_LAPTOP_7RUN3K07_properties_typeProperties_userName": {
+			"value": "sa"
+		},
+		"containerUri": {
+			"value": ""
+		},
+		"containerSasToken": {
+			"value": ""
+		}
+	}
+}
