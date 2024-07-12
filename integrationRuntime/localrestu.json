@@ -1,0 +1,6 @@
+{
+	"name": "localrestu",
+	"properties": {
+		"type": "SelfHosted"
+	}
+}

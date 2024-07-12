@@ -1,0 +1,9 @@
+{
+	"name": "adfrestuajisukma",
+	"location": "southeastasia",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "86cf67c4-7b23-401c-8883-84e87aad9493",
+		"tenantId": "e522de87-3b5f-4914-b700-3ee0ac8e7497"
+	}
+}
