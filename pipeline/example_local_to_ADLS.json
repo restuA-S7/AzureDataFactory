@@ -1,0 +1,71 @@
+{
+	"name": "example_local_to_ADLS",
+	"properties": {
+		"activities": [
+			{
+				"name": "sql_to_csv",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "sql_LAPTOP_7RUN3K07",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema_database": "HumanResources",
+							"tabel_database": "Employee"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "csv_ADLS_restuajisukma",
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": "development",
+							"folder_name": "data",
+							"file_name": "Depatemen.csv",
+							"delimiter_name": ",",
+							"row_as_headers": true
+						}
+					}
+				]
+			}
+		],
+		"annotations": []
+	}
+}
