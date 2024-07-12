@@ -1,0 +1,49 @@
+{
+	"name": "rating",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "ADLS_restu",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "DelimitedText",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Rating.csv",
+				"folderPath": "data",
+				"fileSystem": "development"
+			},
+			"columnDelimiter": ",",
+			"escapeChar": "\\",
+			"firstRowAsHeader": true,
+			"quoteChar": "\""
+		},
+		"schema": [
+			{
+				"name": "PrimaryGenre",
+				"type": "String"
+			},
+			{
+				"name": "year",
+				"type": "String"
+			},
+			{
+				"name": "avgRating",
+				"type": "String"
+			},
+			{
+				"name": "HighestRated",
+				"type": "String"
+			},
+			{
+				"name": "LowestRated",
+				"type": "String"
+			},
+			{
+				"name": "NumberOfMovies",
+				"type": "String"
+			}
+		]
+	}
+}
