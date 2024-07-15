@@ -2148,11 +2148,11 @@
 						"timeZone": "SE Asia Standard Time",
 						"schedule": {
 							"minutes": [
-								0
+								15
 							],
 							"hours": [
 								9,
-								13
+								15
 							]
 						}
 					}
