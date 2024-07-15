@@ -1,0 +1,30 @@
+{
+	"name": "Sql_hanif",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "Sql_hanif",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"schema": {
+				"type": "string"
+			},
+			"tabel_name": {
+				"type": "string"
+			}
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().schema",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().tabel_name",
+				"type": "Expression"
+			}
+		}
+	}
+}
