@@ -14,6 +14,12 @@
 		"sql_LAPTOP_7RUN3K07_password": {
 			"value": ""
 		},
+		"hanifstorageaccount_accountKey": {
+			"value": ""
+		},
+		"Sql_hanif_password": {
+			"value": ""
+		},
 		"ADLS_restu_properties_typeProperties_url": {
 			"value": "https://storageaccrestu.dfs.core.windows.net/"
 		},
@@ -34,6 +40,21 @@
 		},
 		"sql_LAPTOP_7RUN3K07_properties_typeProperties_userName": {
 			"value": "sa"
+		},
+		"HTTP_solliancepublicdata_Customer_properties_typeProperties_url": {
+			"value": "https://solliancepublicdata.blob.core.windows.net/dataengineering/dp-203/awdata/CustomerSource.csv"
+		},
+		"hanifstorageaccount_properties_typeProperties_url": {
+			"value": "https://hanifstorageaccount.dfs.core.windows.net/"
+		},
+		"Sql_hanif_properties_typeProperties_server": {
+			"value": "mhaniffajari.database.windows.net"
+		},
+		"Sql_hanif_properties_typeProperties_database": {
+			"value": "data"
+		},
+		"Sql_hanif_properties_typeProperties_userName": {
+			"value": "admin_sa"
 		},
 		"containerUri": {
 			"value": ""

@@ -19,6 +19,14 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'sql_LAPTOP_7RUN3K07'"
 		},
+		"hanifstorageaccount_accountKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'accountKey' of 'hanifstorageaccount'"
+		},
+		"Sql_hanif_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Sql_hanif'"
+		},
 		"ADLS_restu_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://storageaccrestu.dfs.core.windows.net/"
@@ -46,6 +54,26 @@
 		"sql_LAPTOP_7RUN3K07_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "sa"
+		},
+		"HTTP_solliancepublicdata_Customer_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://solliancepublicdata.blob.core.windows.net/dataengineering/dp-203/awdata/CustomerSource.csv"
+		},
+		"hanifstorageaccount_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://hanifstorageaccount.dfs.core.windows.net/"
+		},
+		"Sql_hanif_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "mhaniffajari.database.windows.net"
+		},
+		"Sql_hanif_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "data"
+		},
+		"Sql_hanif_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "admin_sa"
 		},
 		"containerUri": {
 			"type": "string",
@@ -80,6 +108,12 @@
 					"Sql_restu_password": {
 						"value": "[parameters('Sql_restu_password')]"
 					},
+					"hanifstorageaccount_accountKey": {
+						"value": "[parameters('hanifstorageaccount_accountKey')]"
+					},
+					"Sql_hanif_password": {
+						"value": "[parameters('Sql_hanif_password')]"
+					},
 					"sql_LAPTOP_7RUN3K07_password": {
 						"value": "[parameters('sql_LAPTOP_7RUN3K07_password')]"
 					},
@@ -95,6 +129,21 @@
 					"Sql_restu_properties_typeProperties_userName": {
 						"value": "[parameters('Sql_restu_properties_typeProperties_userName')]"
 					},
+					"HTTP_solliancepublicdata_Customer_properties_typeProperties_url": {
+						"value": "[parameters('HTTP_solliancepublicdata_Customer_properties_typeProperties_url')]"
+					},
+					"hanifstorageaccount_properties_typeProperties_url": {
+						"value": "[parameters('hanifstorageaccount_properties_typeProperties_url')]"
+					},
+					"Sql_hanif_properties_typeProperties_server": {
+						"value": "[parameters('Sql_hanif_properties_typeProperties_server')]"
+					},
+					"Sql_hanif_properties_typeProperties_database": {
+						"value": "[parameters('Sql_hanif_properties_typeProperties_database')]"
+					},
+					"Sql_hanif_properties_typeProperties_userName": {
+						"value": "[parameters('Sql_hanif_properties_typeProperties_userName')]"
+					},
 					"sql_LAPTOP_7RUN3K07_properties_typeProperties_server": {
 						"value": "[parameters('sql_LAPTOP_7RUN3K07_properties_typeProperties_server')]"
 					},
@@ -107,6 +156,26 @@
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "adfrestuajisukma_ArmTemplate_1",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_1.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'adfrestuajisukma_ArmTemplate_0')]"
+			]
 		}
 	]
 }
