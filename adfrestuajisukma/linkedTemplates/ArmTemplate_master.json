@@ -11,25 +11,41 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'ADLS_restu'"
 		},
+		"Sql_hanif_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'Sql_hanif'"
+		},
 		"Sql_restu_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'Sql_restu'"
-		},
-		"sql_LAPTOP_7RUN3K07_password": {
-			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'sql_LAPTOP_7RUN3K07'"
 		},
 		"hanifstorageaccount_accountKey": {
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'hanifstorageaccount'"
 		},
-		"Sql_hanif_password": {
+		"sql_LAPTOP_7RUN3K07_password": {
 			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'Sql_hanif'"
+			"metadata": "Secure string for 'password' of 'sql_LAPTOP_7RUN3K07'"
 		},
 		"ADLS_restu_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://storageaccrestu.dfs.core.windows.net/"
+		},
+		"HTTP_solliancepublicdata_Customer_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://solliancepublicdata.blob.core.windows.net/dataengineering/dp-203/awdata/CustomerSource.csv"
+		},
+		"Sql_hanif_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "mhaniffajari.database.windows.net"
+		},
+		"Sql_hanif_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "data"
+		},
+		"Sql_hanif_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "admin_sa"
 		},
 		"Sql_restu_properties_typeProperties_server": {
 			"type": "string",
@@ -43,6 +59,10 @@
 			"type": "string",
 			"defaultValue": "admin_restu"
 		},
+		"hanifstorageaccount_properties_typeProperties_url": {
+			"type": "string",
+			"defaultValue": "https://hanifstorageaccount.dfs.core.windows.net/"
+		},
 		"sql_LAPTOP_7RUN3K07_properties_typeProperties_server": {
 			"type": "string",
 			"defaultValue": "LAPTOP-7RUN3K07"
@@ -54,26 +74,6 @@
 		"sql_LAPTOP_7RUN3K07_properties_typeProperties_userName": {
 			"type": "string",
 			"defaultValue": "sa"
-		},
-		"HTTP_solliancepublicdata_Customer_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://solliancepublicdata.blob.core.windows.net/dataengineering/dp-203/awdata/CustomerSource.csv"
-		},
-		"hanifstorageaccount_properties_typeProperties_url": {
-			"type": "string",
-			"defaultValue": "https://hanifstorageaccount.dfs.core.windows.net/"
-		},
-		"Sql_hanif_properties_typeProperties_server": {
-			"type": "string",
-			"defaultValue": "mhaniffajari.database.windows.net"
-		},
-		"Sql_hanif_properties_typeProperties_database": {
-			"type": "string",
-			"defaultValue": "data"
-		},
-		"Sql_hanif_properties_typeProperties_userName": {
-			"type": "string",
-			"defaultValue": "admin_sa"
 		},
 		"containerUri": {
 			"type": "string",
@@ -105,20 +105,32 @@
 					"ADLS_restu_accountKey": {
 						"value": "[parameters('ADLS_restu_accountKey')]"
 					},
+					"Sql_hanif_password": {
+						"value": "[parameters('Sql_hanif_password')]"
+					},
 					"Sql_restu_password": {
 						"value": "[parameters('Sql_restu_password')]"
 					},
 					"hanifstorageaccount_accountKey": {
 						"value": "[parameters('hanifstorageaccount_accountKey')]"
 					},
-					"Sql_hanif_password": {
-						"value": "[parameters('Sql_hanif_password')]"
-					},
 					"sql_LAPTOP_7RUN3K07_password": {
 						"value": "[parameters('sql_LAPTOP_7RUN3K07_password')]"
 					},
 					"ADLS_restu_properties_typeProperties_url": {
 						"value": "[parameters('ADLS_restu_properties_typeProperties_url')]"
+					},
+					"HTTP_solliancepublicdata_Customer_properties_typeProperties_url": {
+						"value": "[parameters('HTTP_solliancepublicdata_Customer_properties_typeProperties_url')]"
+					},
+					"Sql_hanif_properties_typeProperties_server": {
+						"value": "[parameters('Sql_hanif_properties_typeProperties_server')]"
+					},
+					"Sql_hanif_properties_typeProperties_database": {
+						"value": "[parameters('Sql_hanif_properties_typeProperties_database')]"
+					},
+					"Sql_hanif_properties_typeProperties_userName": {
+						"value": "[parameters('Sql_hanif_properties_typeProperties_userName')]"
 					},
 					"Sql_restu_properties_typeProperties_server": {
 						"value": "[parameters('Sql_restu_properties_typeProperties_server')]"
@@ -129,20 +141,8 @@
 					"Sql_restu_properties_typeProperties_userName": {
 						"value": "[parameters('Sql_restu_properties_typeProperties_userName')]"
 					},
-					"HTTP_solliancepublicdata_Customer_properties_typeProperties_url": {
-						"value": "[parameters('HTTP_solliancepublicdata_Customer_properties_typeProperties_url')]"
-					},
 					"hanifstorageaccount_properties_typeProperties_url": {
 						"value": "[parameters('hanifstorageaccount_properties_typeProperties_url')]"
-					},
-					"Sql_hanif_properties_typeProperties_server": {
-						"value": "[parameters('Sql_hanif_properties_typeProperties_server')]"
-					},
-					"Sql_hanif_properties_typeProperties_database": {
-						"value": "[parameters('Sql_hanif_properties_typeProperties_database')]"
-					},
-					"Sql_hanif_properties_typeProperties_userName": {
-						"value": "[parameters('Sql_hanif_properties_typeProperties_userName')]"
 					},
 					"sql_LAPTOP_7RUN3K07_properties_typeProperties_server": {
 						"value": "[parameters('sql_LAPTOP_7RUN3K07_properties_typeProperties_server')]"
