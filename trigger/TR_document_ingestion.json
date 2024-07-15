@@ -1,5 +1,5 @@
 {
-	"name": "TR_document_ingetion",
+	"name": "TR_document_ingestion",
 	"properties": {
 		"annotations": [],
 		"runtimeState": "Stopped",
