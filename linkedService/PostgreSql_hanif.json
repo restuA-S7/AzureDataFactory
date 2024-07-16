@@ -7,11 +7,11 @@
 		"typeProperties": {
 			"server": "34.31.255.191",
 			"port": 5432,
-			"database": "data",
+			"database": "postgres",
 			"username": "postgres",
 			"sslMode": 2,
 			"authenticationType": "Basic",
-			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDJGNzZFNzYyLTQ0MTQtNDlDMC1BNjQwLTNBNUYzOThDMzlERV83MjE4OWE1Mi04Y2FhLTRkNmEtODg5MS0wMDNmY2Y5Nzc2NjEiDQp9"
+			"encryptedCredential": "ew0KICAiVmVyc2lvbiI6ICIyMDE3LTExLTMwIiwNCiAgIlByb3RlY3Rpb25Nb2RlIjogIktleSIsDQogICJTZWNyZXRDb250ZW50VHlwZSI6ICJQbGFpbnRleHQiLA0KICAiQ3JlZGVudGlhbElkIjogIkRBVEFGQUNUT1JZQDJGNzZFNzYyLTQ0MTQtNDlDMC1BNjQwLTNBNUYzOThDMzlERV80YjNlN2Q4Zi02NWJiLTQ3NGMtOGM5ZS02NzgxYTc4Yzg5YmYiDQp9"
 		}
 	}
 }
