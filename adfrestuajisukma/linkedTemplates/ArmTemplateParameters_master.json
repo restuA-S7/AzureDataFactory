@@ -8,6 +8,12 @@
 		"ADLS_restu_accountKey": {
 			"value": ""
 		},
+		"GoogleCloudStorage_mashanif_secretAccessKey": {
+			"value": ""
+		},
+		"SqlServer_mashanif_password": {
+			"value": ""
+		},
 		"Sql_hanif_password": {
 			"value": ""
 		},
@@ -20,11 +26,29 @@
 		"sql_LAPTOP_7RUN3K07_password": {
 			"value": ""
 		},
+		"MySql_hanif_password": {
+			"value": ""
+		},
+		"PostgreSql_hanif_password": {
+			"value": ""
+		},
 		"ADLS_restu_properties_typeProperties_url": {
 			"value": "https://storageaccrestu.dfs.core.windows.net/"
 		},
+		"GoogleCloudStorage_mashanif_properties_typeProperties_accessKeyId": {
+			"value": "GOOGJUP6CZDUHBLCN3JUECIC"
+		},
 		"HTTP_solliancepublicdata_Customer_properties_typeProperties_url": {
 			"value": "https://solliancepublicdata.blob.core.windows.net/dataengineering/dp-203/awdata/CustomerSource.csv"
+		},
+		"SqlServer_mashanif_properties_typeProperties_server": {
+			"value": "hanifajari.database.windows.net"
+		},
+		"SqlServer_mashanif_properties_typeProperties_database": {
+			"value": "data"
+		},
+		"SqlServer_mashanif_properties_typeProperties_userName": {
+			"value": "admin_sa"
 		},
 		"Sql_hanif_properties_typeProperties_server": {
 			"value": "mhaniffajari.database.windows.net"
@@ -55,6 +79,24 @@
 		},
 		"sql_LAPTOP_7RUN3K07_properties_typeProperties_userName": {
 			"value": "sa"
+		},
+		"MySql_hanif_properties_typeProperties_server": {
+			"value": "34.34.222.232"
+		},
+		"MySql_hanif_properties_typeProperties_database": {
+			"value": "data"
+		},
+		"MySql_hanif_properties_typeProperties_username": {
+			"value": "admin"
+		},
+		"PostgreSql_hanif_properties_typeProperties_server": {
+			"value": "34.31.255.191"
+		},
+		"PostgreSql_hanif_properties_typeProperties_database": {
+			"value": "postgres"
+		},
+		"PostgreSql_hanif_properties_typeProperties_username": {
+			"value": "postgres"
 		},
 		"containerUri": {
 			"value": ""

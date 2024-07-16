@@ -11,6 +11,14 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'ADLS_restu'"
 		},
+		"GoogleCloudStorage_mashanif_secretAccessKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'secretAccessKey' of 'GoogleCloudStorage_mashanif'"
+		},
+		"SqlServer_mashanif_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SqlServer_mashanif'"
+		},
 		"Sql_hanif_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'Sql_hanif'"
@@ -23,17 +31,37 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'hanifstorageaccount'"
 		},
-		"sql_LAPTOP_7RUN3K07_password": {
+		"MySql_hanif_password": {
 			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'sql_LAPTOP_7RUN3K07'"
+			"metadata": "Secure string for 'password' of 'MySql_hanif'"
+		},
+		"PostgreSql_hanif_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'PostgreSql_hanif'"
 		},
 		"ADLS_restu_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://storageaccrestu.dfs.core.windows.net/"
 		},
+		"GoogleCloudStorage_mashanif_properties_typeProperties_accessKeyId": {
+			"type": "string",
+			"defaultValue": "GOOGJUP6CZDUHBLCN3JUECIC"
+		},
 		"HTTP_solliancepublicdata_Customer_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://solliancepublicdata.blob.core.windows.net/dataengineering/dp-203/awdata/CustomerSource.csv"
+		},
+		"SqlServer_mashanif_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "hanifajari.database.windows.net"
+		},
+		"SqlServer_mashanif_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "data"
+		},
+		"SqlServer_mashanif_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "admin_sa"
 		},
 		"Sql_hanif_properties_typeProperties_server": {
 			"type": "string",
@@ -63,17 +91,29 @@
 			"type": "string",
 			"defaultValue": "https://hanifstorageaccount.dfs.core.windows.net/"
 		},
-		"sql_LAPTOP_7RUN3K07_properties_typeProperties_server": {
+		"MySql_hanif_properties_typeProperties_server": {
 			"type": "string",
-			"defaultValue": "LAPTOP-7RUN3K07"
+			"defaultValue": "34.34.222.232"
 		},
-		"sql_LAPTOP_7RUN3K07_properties_typeProperties_database": {
+		"MySql_hanif_properties_typeProperties_database": {
 			"type": "string",
-			"defaultValue": "AdventureWorks2022"
+			"defaultValue": "data"
 		},
-		"sql_LAPTOP_7RUN3K07_properties_typeProperties_userName": {
+		"MySql_hanif_properties_typeProperties_username": {
 			"type": "string",
-			"defaultValue": "sa"
+			"defaultValue": "admin"
+		},
+		"PostgreSql_hanif_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "34.31.255.191"
+		},
+		"PostgreSql_hanif_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "postgres"
+		},
+		"PostgreSql_hanif_properties_typeProperties_username": {
+			"type": "string",
+			"defaultValue": "postgres"
 		}
 	},
 	"variables": {
@@ -98,6 +138,24 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('factoryName'), '/GoogleCloudStorage_mashanif')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "GoogleCloudStorage",
+				"typeProperties": {
+					"serviceUrl": "https://storage.googleapis.com",
+					"accessKeyId": "[parameters('GoogleCloudStorage_mashanif_properties_typeProperties_accessKeyId')]",
+					"secretAccessKey": {
+						"type": "SecureString",
+						"value": "[parameters('GoogleCloudStorage_mashanif_secretAccessKey')]"
+					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('factoryName'), '/HTTP_solliancepublicdata_Customer')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
@@ -108,6 +166,28 @@
 					"url": "[parameters('HTTP_solliancepublicdata_Customer_properties_typeProperties_url')]",
 					"enableServerCertificateValidation": false,
 					"authenticationType": "Anonymous"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/SqlServer_mashanif')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "SqlServer",
+				"typeProperties": {
+					"server": "[parameters('SqlServer_mashanif_properties_typeProperties_server')]",
+					"database": "[parameters('SqlServer_mashanif_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": true,
+					"authenticationType": "SQL",
+					"userName": "[parameters('SqlServer_mashanif_properties_typeProperties_userName')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('SqlServer_mashanif_password')]"
+					}
 				}
 			},
 			"dependsOn": []
@@ -174,22 +254,12 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/localrestu')]",
-			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"type": "SelfHosted",
-				"typeProperties": {}
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('factoryName'), '/TR_document_ingestion')]",
 			"type": "Microsoft.DataFactory/factories/triggers",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"runtimeState": "Started",
+				"runtimeState": "Stopped",
 				"pipelines": [],
 				"type": "ScheduleTrigger",
 				"typeProperties": {
@@ -208,6 +278,61 @@
 							]
 						}
 					}
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/localrestu')]",
+			"type": "Microsoft.DataFactory/factories/integrationRuntimes",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"type": "SelfHosted",
+				"typeProperties": {}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MySql_hanif')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "MySql",
+				"typeProperties": {
+					"server": "[parameters('MySql_hanif_properties_typeProperties_server')]",
+					"port": 3306,
+					"database": "[parameters('MySql_hanif_properties_typeProperties_database')]",
+					"username": "[parameters('MySql_hanif_properties_typeProperties_username')]",
+					"sslMode": 1,
+					"useSystemTrustStore": 0,
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('MySql_hanif_password')]"
+					},
+					"driverVersion": "v2"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PostgreSql_hanif')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "PostgreSqlV2",
+				"typeProperties": {
+					"server": "[parameters('PostgreSql_hanif_properties_typeProperties_server')]",
+					"port": 5432,
+					"database": "[parameters('PostgreSql_hanif_properties_typeProperties_database')]",
+					"username": "[parameters('PostgreSql_hanif_properties_typeProperties_username')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('PostgreSql_hanif_password')]"
+					},
+					"sslMode": 2,
+					"authenticationType": "Basic"
 				}
 			},
 			"dependsOn": []
@@ -254,6 +379,47 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/ADLS_restu')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Binary_GoogleCloud')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "GoogleCloudStorage_mashanif",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"folder_name": {
+						"type": "string"
+					},
+					"file_name": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "Azure Day 5"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "GoogleCloudStorageLocation",
+						"bucketName": "azure_data_engineer",
+						"folderPath": {
+							"value": "@dataset().folder_name",
+							"type": "Expression"
+						},
+						"fileName": {
+							"value": "@dataset().file_name",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/GoogleCloudStorage_mashanif')]"
 			]
 		},
 		{
@@ -365,6 +531,37 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/ADLS_restu')]"
+			]
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MySql_Google')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "MySql_hanif",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"tabel_name": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "Azure Day 5"
+				},
+				"annotations": [],
+				"type": "MySqlTable",
+				"schema": [],
+				"typeProperties": {
+					"tableName": {
+						"value": "@dataset().tabel_name",
+						"type": "Expression"
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/MySql_hanif')]"
 			]
 		},
 		{
@@ -521,714 +718,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/ADLS_restu')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/rating')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ADLS_restu",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "Rating.csv",
-						"folderPath": "data",
-						"fileSystem": "development"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "PrimaryGenre",
-						"type": "String"
-					},
-					{
-						"name": "year",
-						"type": "String"
-					},
-					{
-						"name": "avgRating",
-						"type": "String"
-					},
-					{
-						"name": "HighestRated",
-						"type": "String"
-					},
-					{
-						"name": "LowestRated",
-						"type": "String"
-					},
-					{
-						"name": "NumberOfMovies",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ADLS_restu')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/sql_restu')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Sql_restu",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"schmea": {
-						"type": "string"
-					},
-					"table_name": {
-						"type": "string"
-					}
-				},
-				"folder": {
-					"name": "Database"
-				},
-				"annotations": [],
-				"type": "SqlServerTable",
-				"schema": [
-					{
-						"name": "CustomerKey",
-						"type": "smallint",
-						"precision": 5
-					},
-					{
-						"name": "FirstName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "LastName",
-						"type": "nvarchar"
-					},
-					{
-						"name": "MaritalStatus",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Gender",
-						"type": "nvarchar"
-					},
-					{
-						"name": "YearlyIncome",
-						"type": "money",
-						"precision": 19,
-						"scale": 4
-					},
-					{
-						"name": "Education",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Occupation",
-						"type": "nvarchar"
-					},
-					{
-						"name": "City",
-						"type": "nvarchar"
-					},
-					{
-						"name": "StateProvince",
-						"type": "nvarchar"
-					},
-					{
-						"name": "Country",
-						"type": "nvarchar"
-					},
-					{
-						"name": "NumberOfOrders",
-						"type": "tinyint",
-						"precision": 3
-					},
-					{
-						"name": "TotalQuantity",
-						"type": "tinyint",
-						"precision": 3
-					},
-					{
-						"name": "TotalAmount",
-						"type": "money",
-						"precision": 19,
-						"scale": 4
-					}
-				],
-				"typeProperties": {
-					"schema": {
-						"value": "@dataset().schmea",
-						"type": "Expression"
-					},
-					"table": {
-						"value": "@dataset().table_name",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Sql_restu')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/sql_LAPTOP_7RUN3K07')]",
-			"type": "Microsoft.DataFactory/factories/linkedServices",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"annotations": [],
-				"type": "SqlServer",
-				"typeProperties": {
-					"server": "[parameters('sql_LAPTOP_7RUN3K07_properties_typeProperties_server')]",
-					"database": "[parameters('sql_LAPTOP_7RUN3K07_properties_typeProperties_database')]",
-					"encrypt": "mandatory",
-					"trustServerCertificate": true,
-					"authenticationType": "SQL",
-					"userName": "[parameters('sql_LAPTOP_7RUN3K07_properties_typeProperties_userName')]",
-					"password": {
-						"type": "SecureString",
-						"value": "[parameters('sql_LAPTOP_7RUN3K07_password')]"
-					}
-				},
-				"connectVia": {
-					"referenceName": "localrestu",
-					"type": "IntegrationRuntimeReference"
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/integrationRuntimes/localrestu')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/example')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "csv_to_sql",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"sink": {
-								"type": "SqlServerSink",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "csv_ADLS_restuajisukma",
-								"type": "DatasetReference",
-								"parameters": {
-									"container_name": "development",
-									"folder_name": "datasource",
-									"file_name": "CustomerOrders.csv",
-									"delimiter_name": ",",
-									"row_as_headers": true
-								}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "sql_restu",
-								"type": "DatasetReference",
-								"parameters": {
-									"schmea": "dbo",
-									"table_name": "CustomerOrders"
-								}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"folder": {
-					"name": "example"
-				},
-				"annotations": [],
-				"lastPublishTime": "2024-07-12T06:33:46Z"
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/csv_ADLS_restuajisukma')]",
-				"[concat(variables('factoryId'), '/datasets/sql_restu')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/example_SCBD_HTTP_to_ADLS')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "HTTP_to_ADLS",
-						"type": "Copy",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "BinarySource",
-								"storeSettings": {
-									"type": "HttpReadSettings",
-									"requestMethod": "GET"
-								},
-								"formatSettings": {
-									"type": "BinaryReadSettings"
-								}
-							},
-							"sink": {
-								"type": "BinarySink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "Binary_HTTP_solliancepublicdata_Customer",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Binary_ADLS_solliancepublicdata",
-								"type": "DatasetReference",
-								"parameters": {
-									"container": "development",
-									"folder_name": "HTTPS",
-									"file_name": "CustomerSource.csv"
-								}
-							}
-						]
-					},
-					{
-						"name": "inser_csv_to_sql",
-						"type": "Copy",
-						"state": "Inactive",
-						"onInactiveMarkAs": "Succeeded",
-						"dependsOn": [
-							{
-								"activity": "HTTP_to_ADLS",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "DelimitedTextSource",
-								"storeSettings": {
-									"type": "AzureBlobFSReadSettings",
-									"recursive": true,
-									"enablePartitionDiscovery": false
-								},
-								"formatSettings": {
-									"type": "DelimitedTextReadSettings"
-								}
-							},
-							"sink": {
-								"type": "SqlServerSink",
-								"preCopyScript": "IF EXISTS (SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = 'CustomerSource' AND TABLE_SCHEMA = 'dbo')\nBEGIN\n    TRUNCATE TABLE dbo.CustomerSource;\nEND",
-								"writeBehavior": "insert",
-								"sqlWriterUseTableLock": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"mappings": [
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 1
-										},
-										"sink": {
-											"name": "CustomerID",
-											"type": "Int32",
-											"physicalType": "int"
-										}
-									},
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 2
-										},
-										"sink": {
-											"name": "Title",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 3
-										},
-										"sink": {
-											"name": "FirstName",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 4
-										},
-										"sink": {
-											"name": "MiddleName",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 5
-										},
-										"sink": {
-											"name": "LastName",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 6
-										},
-										"sink": {
-											"name": "Suffix",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 7
-										},
-										"sink": {
-											"name": "CompanyName",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 8
-										},
-										"sink": {
-											"name": "SalesPerson",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 9
-										},
-										"sink": {
-											"name": "EmailAddress",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									},
-									{
-										"source": {
-											"type": "String",
-											"ordinal": 10
-										},
-										"sink": {
-											"name": "Phone",
-											"type": "String",
-											"physicalType": "nvarchar"
-										}
-									}
-								],
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "csv_ADLS_restuajisukma",
-								"type": "DatasetReference",
-								"parameters": {
-									"container_name": "development",
-									"folder_name": "HTTPS",
-									"file_name": "CustomerSource.csv",
-									"delimiter_name": "|",
-									"row_as_headers": false
-								}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "sql_restu",
-								"type": "DatasetReference",
-								"parameters": {
-									"schmea": "dbo",
-									"table_name": "CustomerSource"
-								}
-							}
-						]
-					},
-					{
-						"name": "SCD_type_1",
-						"type": "Copy",
-						"dependsOn": [
-							{
-								"activity": "inser_csv_to_sql",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "SqlServerSource",
-								"additionalColumns": [
-									{
-										"name": "InsertedDate",
-										"value": {
-											"value": "@utcNow()",
-											"type": "Expression"
-										}
-									},
-									{
-										"name": "ModifiedDate",
-										"value": {
-											"value": "@utcNow()",
-											"type": "Expression"
-										}
-									}
-								],
-								"queryTimeout": "02:00:00",
-								"partitionOption": "None"
-							},
-							"sink": {
-								"type": "SqlServerSink",
-								"writeBehavior": "upsert",
-								"upsertSettings": {
-									"useTempDB": true,
-									"keys": [
-										"CustomerID"
-									]
-								},
-								"sqlWriterUseTableLock": false
-							},
-							"enableStaging": false,
-							"translator": {
-								"type": "TabularTranslator",
-								"typeConversion": true,
-								"typeConversionSettings": {
-									"allowDataTruncation": true,
-									"treatBooleanAsNumber": false
-								}
-							}
-						},
-						"inputs": [
-							{
-								"referenceName": "sql_restu",
-								"type": "DatasetReference",
-								"parameters": {
-									"schmea": "dbo",
-									"table_name": "CustomerSource"
-								}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "sql_restu",
-								"type": "DatasetReference",
-								"parameters": {
-									"schmea": "dbo",
-									"table_name": "DimCustomer"
-								}
-							}
-						]
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"folder": {
-					"name": "example/practic_case/practic_case_scbd"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Binary_HTTP_solliancepublicdata_Customer')]",
-				"[concat(variables('factoryId'), '/datasets/Binary_ADLS_solliancepublicdata')]",
-				"[concat(variables('factoryId'), '/datasets/csv_ADLS_restuajisukma')]",
-				"[concat(variables('factoryId'), '/datasets/sql_restu')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/example_SCBD_HTTP_to_ADLS_StoreProcedur')]",
-			"type": "Microsoft.DataFactory/factories/pipelines",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"activities": [
-					{
-						"name": "HTTP_to_ADLS",
-						"type": "Copy",
-						"dependsOn": [],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"source": {
-								"type": "BinarySource",
-								"storeSettings": {
-									"type": "HttpReadSettings",
-									"requestMethod": "GET"
-								},
-								"formatSettings": {
-									"type": "BinaryReadSettings"
-								}
-							},
-							"sink": {
-								"type": "BinarySink",
-								"storeSettings": {
-									"type": "AzureBlobFSWriteSettings"
-								}
-							},
-							"enableStaging": false
-						},
-						"inputs": [
-							{
-								"referenceName": "Binary_HTTP_solliancepublicdata_Customer",
-								"type": "DatasetReference",
-								"parameters": {}
-							}
-						],
-						"outputs": [
-							{
-								"referenceName": "Binary_ADLS_solliancepublicdata",
-								"type": "DatasetReference",
-								"parameters": {
-									"container": "development",
-									"folder_name": "HTTPS",
-									"file_name": "CustomerSource.csv"
-								}
-							}
-						]
-					},
-					{
-						"name": "Stored procedure1",
-						"type": "SqlServerStoredProcedure",
-						"dependsOn": [
-							{
-								"activity": "HTTP_to_ADLS",
-								"dependencyConditions": [
-									"Succeeded"
-								]
-							}
-						],
-						"policy": {
-							"timeout": "0.12:00:00",
-							"retry": 0,
-							"retryIntervalInSeconds": 30,
-							"secureOutput": false,
-							"secureInput": false
-						},
-						"userProperties": [],
-						"typeProperties": {
-							"storedProcedureName": "[[dbo].[SCD_Type_1_Customer]"
-						},
-						"linkedServiceName": {
-							"referenceName": "Sql_restu",
-							"type": "LinkedServiceReference"
-						}
-					}
-				],
-				"policy": {
-					"elapsedTimeMetric": {}
-				},
-				"folder": {
-					"name": "example/practic_case/practic_case_scbd"
-				},
-				"annotations": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/datasets/Binary_HTTP_solliancepublicdata_Customer')]",
-				"[concat(variables('factoryId'), '/datasets/Binary_ADLS_solliancepublicdata')]",
-				"[concat(variables('factoryId'), '/linkedServices/Sql_restu')]"
 			]
 		}
 	]

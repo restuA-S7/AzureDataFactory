@@ -11,6 +11,14 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'ADLS_restu'"
 		},
+		"GoogleCloudStorage_mashanif_secretAccessKey": {
+			"type": "secureString",
+			"metadata": "Secure string for 'secretAccessKey' of 'GoogleCloudStorage_mashanif'"
+		},
+		"SqlServer_mashanif_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'SqlServer_mashanif'"
+		},
 		"Sql_hanif_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'Sql_hanif'"
@@ -27,13 +35,37 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'sql_LAPTOP_7RUN3K07'"
 		},
+		"MySql_hanif_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'MySql_hanif'"
+		},
+		"PostgreSql_hanif_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'PostgreSql_hanif'"
+		},
 		"ADLS_restu_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://storageaccrestu.dfs.core.windows.net/"
 		},
+		"GoogleCloudStorage_mashanif_properties_typeProperties_accessKeyId": {
+			"type": "string",
+			"defaultValue": "GOOGJUP6CZDUHBLCN3JUECIC"
+		},
 		"HTTP_solliancepublicdata_Customer_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://solliancepublicdata.blob.core.windows.net/dataengineering/dp-203/awdata/CustomerSource.csv"
+		},
+		"SqlServer_mashanif_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "hanifajari.database.windows.net"
+		},
+		"SqlServer_mashanif_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "data"
+		},
+		"SqlServer_mashanif_properties_typeProperties_userName": {
+			"type": "string",
+			"defaultValue": "admin_sa"
 		},
 		"Sql_hanif_properties_typeProperties_server": {
 			"type": "string",
@@ -75,6 +107,30 @@
 			"type": "string",
 			"defaultValue": "sa"
 		},
+		"MySql_hanif_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "34.34.222.232"
+		},
+		"MySql_hanif_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "data"
+		},
+		"MySql_hanif_properties_typeProperties_username": {
+			"type": "string",
+			"defaultValue": "admin"
+		},
+		"PostgreSql_hanif_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "34.31.255.191"
+		},
+		"PostgreSql_hanif_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "postgres"
+		},
+		"PostgreSql_hanif_properties_typeProperties_username": {
+			"type": "string",
+			"defaultValue": "postgres"
+		},
 		"containerUri": {
 			"type": "string",
 			"metadata": "URI to storage account containing linked ARM templates"
@@ -105,6 +161,12 @@
 					"ADLS_restu_accountKey": {
 						"value": "[parameters('ADLS_restu_accountKey')]"
 					},
+					"GoogleCloudStorage_mashanif_secretAccessKey": {
+						"value": "[parameters('GoogleCloudStorage_mashanif_secretAccessKey')]"
+					},
+					"SqlServer_mashanif_password": {
+						"value": "[parameters('SqlServer_mashanif_password')]"
+					},
 					"Sql_hanif_password": {
 						"value": "[parameters('Sql_hanif_password')]"
 					},
@@ -114,14 +176,29 @@
 					"hanifstorageaccount_accountKey": {
 						"value": "[parameters('hanifstorageaccount_accountKey')]"
 					},
-					"sql_LAPTOP_7RUN3K07_password": {
-						"value": "[parameters('sql_LAPTOP_7RUN3K07_password')]"
+					"MySql_hanif_password": {
+						"value": "[parameters('MySql_hanif_password')]"
+					},
+					"PostgreSql_hanif_password": {
+						"value": "[parameters('PostgreSql_hanif_password')]"
 					},
 					"ADLS_restu_properties_typeProperties_url": {
 						"value": "[parameters('ADLS_restu_properties_typeProperties_url')]"
 					},
+					"GoogleCloudStorage_mashanif_properties_typeProperties_accessKeyId": {
+						"value": "[parameters('GoogleCloudStorage_mashanif_properties_typeProperties_accessKeyId')]"
+					},
 					"HTTP_solliancepublicdata_Customer_properties_typeProperties_url": {
 						"value": "[parameters('HTTP_solliancepublicdata_Customer_properties_typeProperties_url')]"
+					},
+					"SqlServer_mashanif_properties_typeProperties_server": {
+						"value": "[parameters('SqlServer_mashanif_properties_typeProperties_server')]"
+					},
+					"SqlServer_mashanif_properties_typeProperties_database": {
+						"value": "[parameters('SqlServer_mashanif_properties_typeProperties_database')]"
+					},
+					"SqlServer_mashanif_properties_typeProperties_userName": {
+						"value": "[parameters('SqlServer_mashanif_properties_typeProperties_userName')]"
 					},
 					"Sql_hanif_properties_typeProperties_server": {
 						"value": "[parameters('Sql_hanif_properties_typeProperties_server')]"
@@ -144,14 +221,23 @@
 					"hanifstorageaccount_properties_typeProperties_url": {
 						"value": "[parameters('hanifstorageaccount_properties_typeProperties_url')]"
 					},
-					"sql_LAPTOP_7RUN3K07_properties_typeProperties_server": {
-						"value": "[parameters('sql_LAPTOP_7RUN3K07_properties_typeProperties_server')]"
+					"MySql_hanif_properties_typeProperties_server": {
+						"value": "[parameters('MySql_hanif_properties_typeProperties_server')]"
 					},
-					"sql_LAPTOP_7RUN3K07_properties_typeProperties_database": {
-						"value": "[parameters('sql_LAPTOP_7RUN3K07_properties_typeProperties_database')]"
+					"MySql_hanif_properties_typeProperties_database": {
+						"value": "[parameters('MySql_hanif_properties_typeProperties_database')]"
 					},
-					"sql_LAPTOP_7RUN3K07_properties_typeProperties_userName": {
-						"value": "[parameters('sql_LAPTOP_7RUN3K07_properties_typeProperties_userName')]"
+					"MySql_hanif_properties_typeProperties_username": {
+						"value": "[parameters('MySql_hanif_properties_typeProperties_username')]"
+					},
+					"PostgreSql_hanif_properties_typeProperties_server": {
+						"value": "[parameters('PostgreSql_hanif_properties_typeProperties_server')]"
+					},
+					"PostgreSql_hanif_properties_typeProperties_database": {
+						"value": "[parameters('PostgreSql_hanif_properties_typeProperties_database')]"
+					},
+					"PostgreSql_hanif_properties_typeProperties_username": {
+						"value": "[parameters('PostgreSql_hanif_properties_typeProperties_username')]"
 					}
 				}
 			},
@@ -170,6 +256,18 @@
 				"parameters": {
 					"factoryName": {
 						"value": "[parameters('factoryName')]"
+					},
+					"sql_LAPTOP_7RUN3K07_password": {
+						"value": "[parameters('sql_LAPTOP_7RUN3K07_password')]"
+					},
+					"sql_LAPTOP_7RUN3K07_properties_typeProperties_server": {
+						"value": "[parameters('sql_LAPTOP_7RUN3K07_properties_typeProperties_server')]"
+					},
+					"sql_LAPTOP_7RUN3K07_properties_typeProperties_database": {
+						"value": "[parameters('sql_LAPTOP_7RUN3K07_properties_typeProperties_database')]"
+					},
+					"sql_LAPTOP_7RUN3K07_properties_typeProperties_userName": {
+						"value": "[parameters('sql_LAPTOP_7RUN3K07_properties_typeProperties_userName')]"
 					}
 				}
 			},
