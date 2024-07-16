@@ -1,0 +1,26 @@
+{
+	"name": "MySql_Google",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "LS_MySql",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"tabel_name": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Azure Day 5"
+		},
+		"annotations": [],
+		"type": "MySqlTable",
+		"schema": [],
+		"typeProperties": {
+			"tableName": {
+				"value": "@dataset().tabel_name",
+				"type": "Expression"
+			}
+		}
+	}
+}
