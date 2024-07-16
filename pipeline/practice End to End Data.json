@@ -224,7 +224,7 @@
 						]
 					},
 					{
-						"activity": "Order items ",
+						"activity": "Order items",
 						"dependencyConditions": [
 							"Succeeded"
 						]
