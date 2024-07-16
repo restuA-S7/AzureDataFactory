@@ -2,7 +2,7 @@
 	"name": "MySql_Google",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "LS_MySql",
+			"referenceName": "MySql_hanif",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
