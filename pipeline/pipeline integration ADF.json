@@ -1,0 +1,225 @@
+{
+	"name": "pipeline integration ADF",
+	"properties": {
+		"activities": [
+			{
+				"name": "Lookup_sqlserver_mashanif",
+				"type": "Lookup",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": {
+							"value": "SELECT \n    STRING_AGG(image_name,',') AS concatenated_files\nFROM list_image;",
+							"type": "Expression"
+						},
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"dataset": {
+						"referenceName": "SqlServer_mashanif",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema": ".",
+							"tabel_name": "."
+						}
+					}
+				}
+			},
+			{
+				"name": "file name variable",
+				"type": "SetVariable",
+				"dependsOn": [
+					{
+						"activity": "Lookup_sqlserver_mashanif",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"variableName": "pipelineReturnValue",
+					"value": [
+						{
+							"key": "image_name",
+							"value": {
+								"type": "Expression",
+								"content": "@split(replace(activity('Lookup_sqlserver_mashanif').output.firstRow.concatenated_files, '\\', ''), ',')"
+							}
+						}
+					],
+					"setSystemVariable": true
+				}
+			},
+			{
+				"name": "Forloop_to_get_google_data",
+				"type": "ForEach",
+				"dependsOn": [
+					{
+						"activity": "file name variable",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"userProperties": [],
+				"typeProperties": {
+					"items": {
+						"value": "@split(replace(activity('Lookup_sqlserver_mashanif').output.firstRow.concatenated_files, '\\', ''), ',')",
+						"type": "Expression"
+					},
+					"activities": [
+						{
+							"name": "transfer ADLS",
+							"type": "Copy",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"source": {
+									"type": "BinarySource",
+									"storeSettings": {
+										"type": "GoogleCloudStorageReadSettings",
+										"recursive": true
+									},
+									"formatSettings": {
+										"type": "BinaryReadSettings"
+									}
+								},
+								"sink": {
+									"type": "BinarySink",
+									"storeSettings": {
+										"type": "AzureBlobFSWriteSettings"
+									}
+								},
+								"enableStaging": false
+							},
+							"inputs": [
+								{
+									"referenceName": "Binary_GoogleCloud",
+									"type": "DatasetReference",
+									"parameters": {
+										"folder_name": "image",
+										"file_name": {
+											"value": "@concat(item(),'.png')",
+											"type": "Expression"
+										}
+									}
+								}
+							],
+							"outputs": [
+								{
+									"referenceName": "Binary_ADLS_Google",
+									"type": "DatasetReference",
+									"parameters": {
+										"container": "development",
+										"folder_name": "image",
+										"file_name": {
+											"value": "@concat(item(),'.png')",
+											"type": "Expression"
+										}
+									}
+								}
+							]
+						},
+						{
+							"name": "Succes Log",
+							"type": "Script",
+							"dependsOn": [
+								{
+									"activity": "transfer ADLS",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"linkedServiceName": {
+								"referenceName": "Sql_restu",
+								"type": "LinkedServiceReference"
+							},
+							"typeProperties": {
+								"scripts": [
+									{
+										"type": "Query",
+										"text": {
+											"value": "@concat('INSERT INTO dbo.log_image (image_name, url_name) VALUES (''', item(), ''', ''https://hanifstorageaccount.blob.core.windows.net/hanifcontainers/image/', item(), ''')')\n\n",
+											"type": "Expression"
+										}
+									}
+								],
+								"scriptBlockExecutionTimeout": "02:00:00"
+							}
+						},
+						{
+							"name": "Failed Log",
+							"type": "Script",
+							"dependsOn": [
+								{
+									"activity": "transfer ADLS",
+									"dependencyConditions": [
+										"Failed"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"linkedServiceName": {
+								"referenceName": "Sql_restu",
+								"type": "LinkedServiceReference"
+							},
+							"typeProperties": {
+								"scripts": [
+									{
+										"type": "Query",
+										"text": {
+											"value": "@concat('INSERT INTO dbo.image_log (image_name, url_name, ingest_tme) VALUES (''', item(), ''', ''failed', ''')')\n\n",
+											"type": "Expression"
+										}
+									}
+								],
+								"scriptBlockExecutionTimeout": "02:00:00"
+							}
+						}
+					]
+				}
+			}
+		],
+		"folder": {
+			"name": "example/practic_case/practic_case_d5"
+		},
+		"annotations": []
+	}
+}

@@ -1,0 +1,33 @@
+{
+	"name": "SqlServer_mashanif",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "SqlServer_mashanif",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"schema": {
+				"type": "string"
+			},
+			"tabel_name": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Azure Day 5"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().schema",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().tabel_name",
+				"type": "Expression"
+			}
+		}
+	}
+}

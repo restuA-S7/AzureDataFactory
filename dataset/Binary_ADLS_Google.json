@@ -1,11 +1,14 @@
 {
-	"name": "Binary_GoogleCloud",
+	"name": "Binary_ADLS_Google",
 	"properties": {
 		"linkedServiceName": {
-			"referenceName": "GoogleCloudStorage_mashanif",
+			"referenceName": "ADLS_restu",
 			"type": "LinkedServiceReference"
 		},
 		"parameters": {
+			"container": {
+				"type": "string"
+			},
 			"folder_name": {
 				"type": "string"
 			},
@@ -20,14 +23,17 @@
 		"type": "Binary",
 		"typeProperties": {
 			"location": {
-				"type": "GoogleCloudStorageLocation",
-				"bucketName": "azure_data_engineer",
+				"type": "AzureBlobFSLocation",
+				"fileName": {
+					"value": "@dataset().file_name",
+					"type": "Expression"
+				},
 				"folderPath": {
 					"value": "@dataset().folder_name",
 					"type": "Expression"
 				},
-				"fileName": {
-					"value": "@dataset().file_name",
+				"fileSystem": {
+					"value": "@dataset().container",
 					"type": "Expression"
 				}
 			}
