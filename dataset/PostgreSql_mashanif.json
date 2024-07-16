@@ -1,0 +1,33 @@
+{
+	"name": "PostgreSql_mashanif",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "PostgreSql_hanif",
+			"type": "LinkedServiceReference"
+		},
+		"parameters": {
+			"tabel_name": {
+				"type": "string"
+			},
+			"schema": {
+				"type": "string"
+			}
+		},
+		"folder": {
+			"name": "Azure Day 5"
+		},
+		"annotations": [],
+		"type": "PostgreSqlV2Table",
+		"schema": [],
+		"typeProperties": {
+			"schema": {
+				"value": "@dataset().schema",
+				"type": "Expression"
+			},
+			"table": {
+				"value": "@dataset().tabel_name",
+				"type": "Expression"
+			}
+		}
+	}
+}

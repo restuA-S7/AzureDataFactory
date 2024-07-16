@@ -1,0 +1,665 @@
+{
+	"name": "pipeline postgree",
+	"properties": {
+		"activities": [
+			{
+				"name": "Application",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "adls application _ stagging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "PostgreSqlV2Source"
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "upsert",
+						"upsertSettings": {
+							"useTempDB": true,
+							"keys": [
+								"SK_ID_CURR"
+							]
+						},
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "PostgreSql_mashanif",
+						"type": "DatasetReference",
+						"parameters": {
+							"tabel_name": "application",
+							"schema": "public"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "sql_restu",
+						"type": "DatasetReference",
+						"parameters": {
+							"schmea": "dbo",
+							"table_name": "application"
+						}
+					}
+				]
+			},
+			{
+				"name": "previous_application",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "adls previous_application _ stagging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "PostgreSqlV2Source"
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "upsert",
+						"upsertSettings": {
+							"useTempDB": true,
+							"keys": [
+								"SK_ID_PREV"
+							]
+						},
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "PostgreSql_mashanif",
+						"type": "DatasetReference",
+						"parameters": {
+							"tabel_name": "previous_application",
+							"schema": "public"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "sql_restu",
+						"type": "DatasetReference",
+						"parameters": {
+							"schmea": "dbo",
+							"table_name": "previous_application"
+						}
+					}
+				]
+			},
+			{
+				"name": "bureau",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "adls bureau _ stagging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "PostgreSqlV2Source"
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "upsert",
+						"upsertSettings": {
+							"useTempDB": true,
+							"keys": [
+								"SK_ID_CURR"
+							]
+						},
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "PostgreSql_mashanif",
+						"type": "DatasetReference",
+						"parameters": {
+							"tabel_name": "bureau",
+							"schema": "public"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "sql_restu",
+						"type": "DatasetReference",
+						"parameters": {
+							"schmea": "dbo",
+							"table_name": "bureau"
+						}
+					}
+				]
+			},
+			{
+				"name": "fact loan modeling",
+				"type": "Copy",
+				"dependsOn": [
+					{
+						"activity": "Application",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "previous_application",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "bureau",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					},
+					{
+						"activity": "installment",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderStoredProcedureName": "[dbo].[sp_generate_loan_modeling_data]",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "upsert",
+						"upsertSettings": {
+							"useTempDB": true,
+							"keys": [
+								"customer_no"
+							]
+						},
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "sql_restu",
+						"type": "DatasetReference",
+						"parameters": {
+							"schmea": ".",
+							"table_name": "."
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "sql_restu",
+						"type": "DatasetReference",
+						"parameters": {
+							"schmea": "dbo",
+							"table_name": "loan_modeling"
+						}
+					}
+				]
+			},
+			{
+				"name": "adls application _ stagging",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "PostgreSqlV2Source",
+						"additionalColumns": [
+							{
+								"name": "ingest_time",
+								"value": {
+									"value": "@utcNow()",
+									"type": "Expression"
+								}
+							}
+						]
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "PostgreSql_mashanif",
+						"type": "DatasetReference",
+						"parameters": {
+							"tabel_name": "application",
+							"schema": "public"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "csv_ADLS_restuajisukma",
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": "development",
+							"folder_name": {
+								"value": "@concat('data/aplication/',formatDateTime(utcnow(), 'yyyy_MM_dd'))",
+								"type": "Expression"
+							},
+							"file_name": "aplication.csv",
+							"delimiter_name": ",",
+							"row_as_headers": true
+						}
+					}
+				]
+			},
+			{
+				"name": "adls previous_application _ stagging",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "PostgreSqlV2Source",
+						"additionalColumns": [
+							{
+								"name": "ingest_time",
+								"value": {
+									"value": "@utcNow()",
+									"type": "Expression"
+								}
+							}
+						]
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "PostgreSql_mashanif",
+						"type": "DatasetReference",
+						"parameters": {
+							"tabel_name": "previous_application",
+							"schema": "public"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "csv_ADLS_restuajisukma",
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": "development",
+							"folder_name": {
+								"value": "@concat('data/previous application/',formatDateTime(utcnow(), 'yyyy_MM_dd'))",
+								"type": "Expression"
+							},
+							"file_name": "previous_application.csv",
+							"delimiter_name": ",",
+							"row_as_headers": true
+						}
+					}
+				]
+			},
+			{
+				"name": "adls bureau _ stagging",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "PostgreSqlV2Source",
+						"additionalColumns": [
+							{
+								"name": "ingest_time",
+								"value": {
+									"value": "@utcNow()",
+									"type": "Expression"
+								}
+							}
+						]
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "PostgreSql_mashanif",
+						"type": "DatasetReference",
+						"parameters": {
+							"tabel_name": "bureau",
+							"schema": "public"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "csv_ADLS_restuajisukma",
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": "development",
+							"folder_name": {
+								"value": "@concat('data/bureau/',formatDateTime(utcnow(), 'yyyy_MM_dd'))",
+								"type": "Expression"
+							},
+							"file_name": "bureau.csv",
+							"delimiter_name": ",",
+							"row_as_headers": true
+						}
+					}
+				]
+			},
+			{
+				"name": "adls installment_ stagging",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "PostgreSqlV2Source",
+						"additionalColumns": [
+							{
+								"name": "ingest_time",
+								"value": {
+									"value": "@utcNow()",
+									"type": "Expression"
+								}
+							}
+						]
+					},
+					"sink": {
+						"type": "DelimitedTextSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "DelimitedTextWriteSettings",
+							"quoteAllText": true,
+							"fileExtension": ".txt"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "PostgreSql_mashanif",
+						"type": "DatasetReference",
+						"parameters": {
+							"tabel_name": "installment",
+							"schema": "public"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "csv_ADLS_restuajisukma",
+						"type": "DatasetReference",
+						"parameters": {
+							"container_name": "development",
+							"folder_name": {
+								"value": "@concat('data/installment/',formatDateTime(utcnow(), 'yyyy_MM_dd'))",
+								"type": "Expression"
+							},
+							"file_name": "aplication.csv",
+							"delimiter_name": ",",
+							"row_as_headers": true
+						}
+					}
+				]
+			},
+			{
+				"name": "installment",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [
+					{
+						"activity": "adls installment_ stagging",
+						"dependencyConditions": [
+							"Succeeded"
+						]
+					}
+				],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "PostgreSqlV2Source"
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "upsert",
+						"upsertSettings": {
+							"useTempDB": true,
+							"keys": [
+								"SK_ID_PREV"
+							]
+						},
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "PostgreSql_mashanif",
+						"type": "DatasetReference",
+						"parameters": {
+							"tabel_name": "installment",
+							"schema": "public"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "sql_restu",
+						"type": "DatasetReference",
+						"parameters": {
+							"schmea": "dbo",
+							"table_name": "installment"
+						}
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "example/practic_case/practic_case_d5"
+		},
+		"annotations": []
+	}
+}
