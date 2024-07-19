@@ -1,0 +1,70 @@
+{
+	"name": "example_executeSP",
+	"properties": {
+		"activities": [
+			{
+				"name": "Exce Sp Employee",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderStoredProcedureName": "[restu].[sp.employee]",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "ParquetSink",
+						"storeSettings": {
+							"type": "AzureBlobFSWriteSettings"
+						},
+						"formatSettings": {
+							"type": "ParquetWriteSettings"
+						}
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "SqlServer_synapse_celerates",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema_name": "restu",
+							"table_name": "employee"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "Parquet_ADLS_Restu",
+						"type": "DatasetReference",
+						"parameters": {
+							"folder_name": "Fact",
+							"file_name": "employee.snappy.parquet"
+						}
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "example/Databrick"
+		},
+		"annotations": []
+	}
+}
