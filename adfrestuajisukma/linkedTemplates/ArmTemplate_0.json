@@ -15,6 +15,14 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'secretAccessKey' of 'GoogleCloudStorage_mashanif'"
 		},
+		"MySql_hanif_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'MySql_hanif'"
+		},
+		"PostgreSql_hanif_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'PostgreSql_hanif'"
+		},
 		"SqlServer_mashanif_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'SqlServer_mashanif'"
@@ -31,13 +39,13 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'accountKey' of 'hanifstorageaccount'"
 		},
-		"MySql_hanif_password": {
+		"DB_Kelompok_2_Restu_accessToken": {
 			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'MySql_hanif'"
+			"metadata": "Secure string for 'accessToken' of 'DB_Kelompok_2_Restu'"
 		},
-		"PostgreSql_hanif_password": {
+		"SqlServer_Synapse_restu_password": {
 			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'PostgreSql_hanif'"
+			"metadata": "Secure string for 'password' of 'SqlServer_Synapse_restu'"
 		},
 		"ADLS_restu_properties_typeProperties_url": {
 			"type": "string",
@@ -50,6 +58,30 @@
 		"HTTP_solliancepublicdata_Customer_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://solliancepublicdata.blob.core.windows.net/dataengineering/dp-203/awdata/CustomerSource.csv"
+		},
+		"MySql_hanif_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "34.34.222.232"
+		},
+		"MySql_hanif_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "data"
+		},
+		"MySql_hanif_properties_typeProperties_username": {
+			"type": "string",
+			"defaultValue": "admin"
+		},
+		"PostgreSql_hanif_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "34.31.255.191"
+		},
+		"PostgreSql_hanif_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "postgres"
+		},
+		"PostgreSql_hanif_properties_typeProperties_username": {
+			"type": "string",
+			"defaultValue": "postgres"
 		},
 		"SqlServer_mashanif_properties_typeProperties_server": {
 			"type": "string",
@@ -91,29 +123,21 @@
 			"type": "string",
 			"defaultValue": "https://hanifstorageaccount.dfs.core.windows.net/"
 		},
-		"MySql_hanif_properties_typeProperties_server": {
+		"DB_Kelompok_2_Restu_properties_typeProperties_existingClusterId": {
 			"type": "string",
-			"defaultValue": "34.34.222.232"
+			"defaultValue": "0719-043146-nqdj1gvx"
 		},
-		"MySql_hanif_properties_typeProperties_database": {
+		"SqlServer_Synapse_restu_properties_typeProperties_server": {
 			"type": "string",
-			"defaultValue": "data"
+			"defaultValue": "celeratessynapse-ondemand.sql.azuresynapse.net"
 		},
-		"MySql_hanif_properties_typeProperties_username": {
+		"SqlServer_Synapse_restu_properties_typeProperties_database": {
 			"type": "string",
-			"defaultValue": "admin"
+			"defaultValue": "kelompok_2"
 		},
-		"PostgreSql_hanif_properties_typeProperties_server": {
+		"SqlServer_Synapse_restu_properties_typeProperties_userName": {
 			"type": "string",
-			"defaultValue": "34.31.255.191"
-		},
-		"PostgreSql_hanif_properties_typeProperties_database": {
-			"type": "string",
-			"defaultValue": "postgres"
-		},
-		"PostgreSql_hanif_properties_typeProperties_username": {
-			"type": "string",
-			"defaultValue": "postgres"
+			"defaultValue": "admin_sa"
 		}
 	},
 	"variables": {
@@ -166,6 +190,51 @@
 					"url": "[parameters('HTTP_solliancepublicdata_Customer_properties_typeProperties_url')]",
 					"enableServerCertificateValidation": false,
 					"authenticationType": "Anonymous"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/MySql_hanif')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "MySql",
+				"typeProperties": {
+					"server": "[parameters('MySql_hanif_properties_typeProperties_server')]",
+					"port": 3306,
+					"database": "[parameters('MySql_hanif_properties_typeProperties_database')]",
+					"username": "[parameters('MySql_hanif_properties_typeProperties_username')]",
+					"sslMode": 1,
+					"useSystemTrustStore": 0,
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('MySql_hanif_password')]"
+					},
+					"driverVersion": "v2"
+				}
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/PostgreSql_hanif')]",
+			"type": "Microsoft.DataFactory/factories/linkedServices",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"annotations": [],
+				"type": "PostgreSqlV2",
+				"typeProperties": {
+					"server": "[parameters('PostgreSql_hanif_properties_typeProperties_server')]",
+					"port": 5432,
+					"database": "[parameters('PostgreSql_hanif_properties_typeProperties_database')]",
+					"username": "[parameters('PostgreSql_hanif_properties_typeProperties_username')]",
+					"password": {
+						"type": "SecureString",
+						"value": "[parameters('PostgreSql_hanif_password')]"
+					},
+					"sslMode": 2,
+					"authenticationType": "Basic"
 				}
 			},
 			"dependsOn": []
@@ -293,49 +362,91 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/MySql_hanif')]",
+			"name": "[concat(parameters('factoryName'), '/DB_Kelompok_2_Restu')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"type": "MySql",
+				"type": "AzureDatabricks",
 				"typeProperties": {
-					"server": "[parameters('MySql_hanif_properties_typeProperties_server')]",
-					"port": 3306,
-					"database": "[parameters('MySql_hanif_properties_typeProperties_database')]",
-					"username": "[parameters('MySql_hanif_properties_typeProperties_username')]",
-					"sslMode": 1,
-					"useSystemTrustStore": 0,
-					"password": {
+					"domain": "https://adb-3577771887562787.7.azuredatabricks.net",
+					"accessToken": {
 						"type": "SecureString",
-						"value": "[parameters('MySql_hanif_password')]"
+						"value": "[parameters('DB_Kelompok_2_Restu_accessToken')]"
 					},
-					"driverVersion": "v2"
+					"existingClusterId": "[parameters('DB_Kelompok_2_Restu_properties_typeProperties_existingClusterId')]"
 				}
 			},
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('factoryName'), '/PostgreSql_hanif')]",
+			"name": "[concat(parameters('factoryName'), '/SqlServer_Synapse_restu')]",
 			"type": "Microsoft.DataFactory/factories/linkedServices",
 			"apiVersion": "2018-06-01",
 			"properties": {
 				"annotations": [],
-				"type": "PostgreSqlV2",
+				"type": "SqlServer",
 				"typeProperties": {
-					"server": "[parameters('PostgreSql_hanif_properties_typeProperties_server')]",
-					"port": 5432,
-					"database": "[parameters('PostgreSql_hanif_properties_typeProperties_database')]",
-					"username": "[parameters('PostgreSql_hanif_properties_typeProperties_username')]",
+					"server": "[parameters('SqlServer_Synapse_restu_properties_typeProperties_server')]",
+					"database": "[parameters('SqlServer_Synapse_restu_properties_typeProperties_database')]",
+					"encrypt": "mandatory",
+					"trustServerCertificate": false,
+					"authenticationType": "SQL",
+					"userName": "[parameters('SqlServer_Synapse_restu_properties_typeProperties_userName')]",
 					"password": {
 						"type": "SecureString",
-						"value": "[parameters('PostgreSql_hanif_password')]"
-					},
-					"sslMode": 2,
-					"authenticationType": "Basic"
+						"value": "[parameters('SqlServer_Synapse_restu_password')]"
+					}
 				}
 			},
 			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('factoryName'), '/Binary_ADLS_Google')]",
+			"type": "Microsoft.DataFactory/factories/datasets",
+			"apiVersion": "2018-06-01",
+			"properties": {
+				"linkedServiceName": {
+					"referenceName": "ADLS_restu",
+					"type": "LinkedServiceReference"
+				},
+				"parameters": {
+					"container": {
+						"type": "string"
+					},
+					"folder_name": {
+						"type": "string"
+					},
+					"file_name": {
+						"type": "string"
+					}
+				},
+				"folder": {
+					"name": "Azure Day 5"
+				},
+				"annotations": [],
+				"type": "Binary",
+				"typeProperties": {
+					"location": {
+						"type": "AzureBlobFSLocation",
+						"fileName": {
+							"value": "@dataset().file_name",
+							"type": "Expression"
+						},
+						"folderPath": {
+							"value": "@dataset().folder_name",
+							"type": "Expression"
+						},
+						"fileSystem": {
+							"value": "@dataset().container",
+							"type": "Expression"
+						}
+					}
+				}
+			},
+			"dependsOn": [
+				"[concat(variables('factoryId'), '/linkedServices/ADLS_restu')]"
+			]
 		},
 		{
 			"name": "[concat(parameters('factoryName'), '/Binary_ADLS_solliancepublicdata')]",
@@ -562,162 +673,6 @@
 			},
 			"dependsOn": [
 				"[concat(variables('factoryId'), '/linkedServices/MySql_hanif')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/Sql_hanif')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "Sql_hanif",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"schema": {
-						"type": "string"
-					},
-					"tabel_name": {
-						"type": "string"
-					}
-				},
-				"annotations": [],
-				"type": "SqlServerTable",
-				"schema": [],
-				"typeProperties": {
-					"schema": {
-						"value": "@dataset().schema",
-						"type": "Expression"
-					},
-					"table": {
-						"value": "@dataset().tabel_name",
-						"type": "Expression"
-					}
-				}
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/Sql_hanif')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/csv_ADLS_restu_moveADLS')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ADLS_restu",
-					"type": "LinkedServiceReference"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": "moviesADLS.csv",
-						"folderPath": "data",
-						"fileSystem": "development"
-					},
-					"columnDelimiter": ",",
-					"escapeChar": "\\",
-					"firstRowAsHeader": true,
-					"quoteChar": "\""
-				},
-				"schema": [
-					{
-						"name": "movie",
-						"type": "String"
-					},
-					{
-						"name": "title",
-						"type": "String"
-					},
-					{
-						"name": "genres",
-						"type": "String"
-					},
-					{
-						"name": "year",
-						"type": "String"
-					},
-					{
-						"name": "Rating",
-						"type": "String"
-					},
-					{
-						"name": "Rotton Tomato",
-						"type": "String"
-					}
-				]
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ADLS_restu')]"
-			]
-		},
-		{
-			"name": "[concat(parameters('factoryName'), '/csv_ADLS_restuajisukma')]",
-			"type": "Microsoft.DataFactory/factories/datasets",
-			"apiVersion": "2018-06-01",
-			"properties": {
-				"linkedServiceName": {
-					"referenceName": "ADLS_restu",
-					"type": "LinkedServiceReference"
-				},
-				"parameters": {
-					"container_name": {
-						"type": "string",
-						"defaultValue": "development"
-					},
-					"folder_name": {
-						"type": "string"
-					},
-					"file_name": {
-						"type": "string"
-					},
-					"delimiter_name": {
-						"type": "string",
-						"defaultValue": ","
-					},
-					"row_as_headers": {
-						"type": "bool",
-						"defaultValue": true
-					}
-				},
-				"folder": {
-					"name": "ADLS"
-				},
-				"annotations": [],
-				"type": "DelimitedText",
-				"typeProperties": {
-					"location": {
-						"type": "AzureBlobFSLocation",
-						"fileName": {
-							"value": "@dataset().file_name",
-							"type": "Expression"
-						},
-						"folderPath": {
-							"value": "@dataset().folder_name",
-							"type": "Expression"
-						},
-						"fileSystem": {
-							"value": "@dataset().container_name",
-							"type": "Expression"
-						}
-					},
-					"columnDelimiter": {
-						"value": "@dataset().delimiter_name",
-						"type": "Expression"
-					},
-					"escapeChar": "\\",
-					"firstRowAsHeader": {
-						"value": "@dataset().row_as_headers",
-						"type": "Expression"
-					},
-					"quoteChar": "\""
-				},
-				"schema": []
-			},
-			"dependsOn": [
-				"[concat(variables('factoryId'), '/linkedServices/ADLS_restu')]"
 			]
 		}
 	]

@@ -11,6 +11,12 @@
 		"GoogleCloudStorage_mashanif_secretAccessKey": {
 			"value": ""
 		},
+		"MySql_hanif_password": {
+			"value": ""
+		},
+		"PostgreSql_hanif_password": {
+			"value": ""
+		},
 		"SqlServer_mashanif_password": {
 			"value": ""
 		},
@@ -26,10 +32,10 @@
 		"sql_LAPTOP_7RUN3K07_password": {
 			"value": ""
 		},
-		"MySql_hanif_password": {
+		"DB_Kelompok_2_Restu_accessToken": {
 			"value": ""
 		},
-		"PostgreSql_hanif_password": {
+		"SqlServer_Synapse_restu_password": {
 			"value": ""
 		},
 		"ADLS_restu_properties_typeProperties_url": {
@@ -40,6 +46,24 @@
 		},
 		"HTTP_solliancepublicdata_Customer_properties_typeProperties_url": {
 			"value": "https://solliancepublicdata.blob.core.windows.net/dataengineering/dp-203/awdata/CustomerSource.csv"
+		},
+		"MySql_hanif_properties_typeProperties_server": {
+			"value": "34.34.222.232"
+		},
+		"MySql_hanif_properties_typeProperties_database": {
+			"value": "data"
+		},
+		"MySql_hanif_properties_typeProperties_username": {
+			"value": "admin"
+		},
+		"PostgreSql_hanif_properties_typeProperties_server": {
+			"value": "34.31.255.191"
+		},
+		"PostgreSql_hanif_properties_typeProperties_database": {
+			"value": "postgres"
+		},
+		"PostgreSql_hanif_properties_typeProperties_username": {
+			"value": "postgres"
 		},
 		"SqlServer_mashanif_properties_typeProperties_server": {
 			"value": "hanifajari.database.windows.net"
@@ -80,23 +104,17 @@
 		"sql_LAPTOP_7RUN3K07_properties_typeProperties_userName": {
 			"value": "sa"
 		},
-		"MySql_hanif_properties_typeProperties_server": {
-			"value": "34.34.222.232"
+		"DB_Kelompok_2_Restu_properties_typeProperties_existingClusterId": {
+			"value": "0719-043146-nqdj1gvx"
 		},
-		"MySql_hanif_properties_typeProperties_database": {
-			"value": "data"
+		"SqlServer_Synapse_restu_properties_typeProperties_server": {
+			"value": "celeratessynapse-ondemand.sql.azuresynapse.net"
 		},
-		"MySql_hanif_properties_typeProperties_username": {
-			"value": "admin"
+		"SqlServer_Synapse_restu_properties_typeProperties_database": {
+			"value": "kelompok_2"
 		},
-		"PostgreSql_hanif_properties_typeProperties_server": {
-			"value": "34.31.255.191"
-		},
-		"PostgreSql_hanif_properties_typeProperties_database": {
-			"value": "postgres"
-		},
-		"PostgreSql_hanif_properties_typeProperties_username": {
-			"value": "postgres"
+		"SqlServer_Synapse_restu_properties_typeProperties_userName": {
+			"value": "admin_sa"
 		},
 		"containerUri": {
 			"value": ""

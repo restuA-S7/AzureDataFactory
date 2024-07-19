@@ -15,6 +15,14 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'secretAccessKey' of 'GoogleCloudStorage_mashanif'"
 		},
+		"MySql_hanif_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'MySql_hanif'"
+		},
+		"PostgreSql_hanif_password": {
+			"type": "secureString",
+			"metadata": "Secure string for 'password' of 'PostgreSql_hanif'"
+		},
 		"SqlServer_mashanif_password": {
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'SqlServer_mashanif'"
@@ -35,13 +43,13 @@
 			"type": "secureString",
 			"metadata": "Secure string for 'password' of 'sql_LAPTOP_7RUN3K07'"
 		},
-		"MySql_hanif_password": {
+		"DB_Kelompok_2_Restu_accessToken": {
 			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'MySql_hanif'"
+			"metadata": "Secure string for 'accessToken' of 'DB_Kelompok_2_Restu'"
 		},
-		"PostgreSql_hanif_password": {
+		"SqlServer_Synapse_restu_password": {
 			"type": "secureString",
-			"metadata": "Secure string for 'password' of 'PostgreSql_hanif'"
+			"metadata": "Secure string for 'password' of 'SqlServer_Synapse_restu'"
 		},
 		"ADLS_restu_properties_typeProperties_url": {
 			"type": "string",
@@ -54,6 +62,30 @@
 		"HTTP_solliancepublicdata_Customer_properties_typeProperties_url": {
 			"type": "string",
 			"defaultValue": "https://solliancepublicdata.blob.core.windows.net/dataengineering/dp-203/awdata/CustomerSource.csv"
+		},
+		"MySql_hanif_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "34.34.222.232"
+		},
+		"MySql_hanif_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "data"
+		},
+		"MySql_hanif_properties_typeProperties_username": {
+			"type": "string",
+			"defaultValue": "admin"
+		},
+		"PostgreSql_hanif_properties_typeProperties_server": {
+			"type": "string",
+			"defaultValue": "34.31.255.191"
+		},
+		"PostgreSql_hanif_properties_typeProperties_database": {
+			"type": "string",
+			"defaultValue": "postgres"
+		},
+		"PostgreSql_hanif_properties_typeProperties_username": {
+			"type": "string",
+			"defaultValue": "postgres"
 		},
 		"SqlServer_mashanif_properties_typeProperties_server": {
 			"type": "string",
@@ -107,29 +139,21 @@
 			"type": "string",
 			"defaultValue": "sa"
 		},
-		"MySql_hanif_properties_typeProperties_server": {
+		"DB_Kelompok_2_Restu_properties_typeProperties_existingClusterId": {
 			"type": "string",
-			"defaultValue": "34.34.222.232"
+			"defaultValue": "0719-043146-nqdj1gvx"
 		},
-		"MySql_hanif_properties_typeProperties_database": {
+		"SqlServer_Synapse_restu_properties_typeProperties_server": {
 			"type": "string",
-			"defaultValue": "data"
+			"defaultValue": "celeratessynapse-ondemand.sql.azuresynapse.net"
 		},
-		"MySql_hanif_properties_typeProperties_username": {
+		"SqlServer_Synapse_restu_properties_typeProperties_database": {
 			"type": "string",
-			"defaultValue": "admin"
+			"defaultValue": "kelompok_2"
 		},
-		"PostgreSql_hanif_properties_typeProperties_server": {
+		"SqlServer_Synapse_restu_properties_typeProperties_userName": {
 			"type": "string",
-			"defaultValue": "34.31.255.191"
-		},
-		"PostgreSql_hanif_properties_typeProperties_database": {
-			"type": "string",
-			"defaultValue": "postgres"
-		},
-		"PostgreSql_hanif_properties_typeProperties_username": {
-			"type": "string",
-			"defaultValue": "postgres"
+			"defaultValue": "admin_sa"
 		},
 		"containerUri": {
 			"type": "string",
@@ -164,6 +188,12 @@
 					"GoogleCloudStorage_mashanif_secretAccessKey": {
 						"value": "[parameters('GoogleCloudStorage_mashanif_secretAccessKey')]"
 					},
+					"MySql_hanif_password": {
+						"value": "[parameters('MySql_hanif_password')]"
+					},
+					"PostgreSql_hanif_password": {
+						"value": "[parameters('PostgreSql_hanif_password')]"
+					},
 					"SqlServer_mashanif_password": {
 						"value": "[parameters('SqlServer_mashanif_password')]"
 					},
@@ -176,11 +206,11 @@
 					"hanifstorageaccount_accountKey": {
 						"value": "[parameters('hanifstorageaccount_accountKey')]"
 					},
-					"MySql_hanif_password": {
-						"value": "[parameters('MySql_hanif_password')]"
+					"DB_Kelompok_2_Restu_accessToken": {
+						"value": "[parameters('DB_Kelompok_2_Restu_accessToken')]"
 					},
-					"PostgreSql_hanif_password": {
-						"value": "[parameters('PostgreSql_hanif_password')]"
+					"SqlServer_Synapse_restu_password": {
+						"value": "[parameters('SqlServer_Synapse_restu_password')]"
 					},
 					"ADLS_restu_properties_typeProperties_url": {
 						"value": "[parameters('ADLS_restu_properties_typeProperties_url')]"
@@ -190,6 +220,24 @@
 					},
 					"HTTP_solliancepublicdata_Customer_properties_typeProperties_url": {
 						"value": "[parameters('HTTP_solliancepublicdata_Customer_properties_typeProperties_url')]"
+					},
+					"MySql_hanif_properties_typeProperties_server": {
+						"value": "[parameters('MySql_hanif_properties_typeProperties_server')]"
+					},
+					"MySql_hanif_properties_typeProperties_database": {
+						"value": "[parameters('MySql_hanif_properties_typeProperties_database')]"
+					},
+					"MySql_hanif_properties_typeProperties_username": {
+						"value": "[parameters('MySql_hanif_properties_typeProperties_username')]"
+					},
+					"PostgreSql_hanif_properties_typeProperties_server": {
+						"value": "[parameters('PostgreSql_hanif_properties_typeProperties_server')]"
+					},
+					"PostgreSql_hanif_properties_typeProperties_database": {
+						"value": "[parameters('PostgreSql_hanif_properties_typeProperties_database')]"
+					},
+					"PostgreSql_hanif_properties_typeProperties_username": {
+						"value": "[parameters('PostgreSql_hanif_properties_typeProperties_username')]"
 					},
 					"SqlServer_mashanif_properties_typeProperties_server": {
 						"value": "[parameters('SqlServer_mashanif_properties_typeProperties_server')]"
@@ -221,23 +269,17 @@
 					"hanifstorageaccount_properties_typeProperties_url": {
 						"value": "[parameters('hanifstorageaccount_properties_typeProperties_url')]"
 					},
-					"MySql_hanif_properties_typeProperties_server": {
-						"value": "[parameters('MySql_hanif_properties_typeProperties_server')]"
+					"DB_Kelompok_2_Restu_properties_typeProperties_existingClusterId": {
+						"value": "[parameters('DB_Kelompok_2_Restu_properties_typeProperties_existingClusterId')]"
 					},
-					"MySql_hanif_properties_typeProperties_database": {
-						"value": "[parameters('MySql_hanif_properties_typeProperties_database')]"
+					"SqlServer_Synapse_restu_properties_typeProperties_server": {
+						"value": "[parameters('SqlServer_Synapse_restu_properties_typeProperties_server')]"
 					},
-					"MySql_hanif_properties_typeProperties_username": {
-						"value": "[parameters('MySql_hanif_properties_typeProperties_username')]"
+					"SqlServer_Synapse_restu_properties_typeProperties_database": {
+						"value": "[parameters('SqlServer_Synapse_restu_properties_typeProperties_database')]"
 					},
-					"PostgreSql_hanif_properties_typeProperties_server": {
-						"value": "[parameters('PostgreSql_hanif_properties_typeProperties_server')]"
-					},
-					"PostgreSql_hanif_properties_typeProperties_database": {
-						"value": "[parameters('PostgreSql_hanif_properties_typeProperties_database')]"
-					},
-					"PostgreSql_hanif_properties_typeProperties_username": {
-						"value": "[parameters('PostgreSql_hanif_properties_typeProperties_username')]"
+					"SqlServer_Synapse_restu_properties_typeProperties_userName": {
+						"value": "[parameters('SqlServer_Synapse_restu_properties_typeProperties_userName')]"
 					}
 				}
 			},
@@ -273,6 +315,26 @@
 			},
 			"dependsOn": [
 				"[resourceId('Microsoft.Resources/deployments', 'adfrestuajisukma_ArmTemplate_0')]"
+			]
+		},
+		{
+			"name": "adfrestuajisukma_ArmTemplate_2",
+			"type": "Microsoft.Resources/deployments",
+			"apiVersion": "2018-02-01",
+			"properties": {
+				"mode": "incremental",
+				"templateLink": {
+					"uri": "[concat(parameters('containerUri'), '/ArmTemplate_2.json', parameters('containerSasToken'))]",
+					"contentVersion": "1.0.0.0"
+				},
+				"parameters": {
+					"factoryName": {
+						"value": "[parameters('factoryName')]"
+					}
+				}
+			},
+			"dependsOn": [
+				"[resourceId('Microsoft.Resources/deployments', 'adfrestuajisukma_ArmTemplate_1')]"
 			]
 		}
 	]
