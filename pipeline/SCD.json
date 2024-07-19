@@ -1,0 +1,42 @@
+{
+	"name": "SCD",
+	"properties": {
+		"activities": [
+			{
+				"name": "SCD 1",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"enableStaging": false
+				},
+				"inputs": [
+					{
+						"referenceName": "SqlServer_mashanif",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema": "dbo",
+							"tabel_name": "Employee"
+						}
+					}
+				]
+			}
+		],
+		"folder": {
+			"name": "example/Tugas SCD"
+		},
+		"annotations": []
+	}
+}
