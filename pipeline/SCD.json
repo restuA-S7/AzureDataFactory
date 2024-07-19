@@ -5,6 +5,8 @@
 			{
 				"name": "SCD 1",
 				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
 				"dependsOn": [],
 				"policy": {
 					"timeout": "0.12:00:00",
@@ -17,18 +19,172 @@
 				"typeProperties": {
 					"source": {
 						"type": "SqlServerSource",
+						"sqlReaderQuery": "with empCTE as(\nselect EmployeeID, max(StartDate) as StartDate\nfrom Employee\ngroup by EmployeeID\n)\n\nselect e.EmployeeID, Name, Position, e.StartDate, EndDate\nfrom Employee e\njoin empCTE em on e.EmployeeID = em.EmployeeID and e.StartDate = em.StartDate\norder by EmployeeID asc",
 						"queryTimeout": "02:00:00",
 						"partitionOption": "None"
 					},
-					"enableStaging": false
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "upsert",
+						"upsertSettings": {
+							"useTempDB": true,
+							"keys": [
+								"EmployeeID"
+							]
+						},
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
 				},
 				"inputs": [
 					{
-						"referenceName": "SqlServer_mashanif",
+						"referenceName": "Sql_hanif",
 						"type": "DatasetReference",
 						"parameters": {
 							"schema": "dbo",
 							"tabel_name": "Employee"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "sql_restu",
+						"type": "DatasetReference",
+						"parameters": {
+							"schmea": "dbo",
+							"table_name": "Employeee"
+						}
+					}
+				]
+			},
+			{
+				"name": "SCD 2",
+				"type": "Copy",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": " WITH empCTE AS (\n    SELECT \n        EmployeeID, \n        MAX(EndDate) AS MaxEndDate\n    FROM \n        Employee\n    GROUP BY \n        EmployeeID\n)\n\nSELECT \n    e.EmployeeLogID,\n    e.EmployeeID, \n    e.Name, \n    e.Position, \n    e.StartDate, \n    e.EndDate,\n    CASE \n        WHEN e.EndDate = em.MaxEndDate THEN 1\n        ELSE 0\n    END AS isLatest\nFROM \n    Employee e\nJOIN \n    empCTE em \nON \n    e.EmployeeID = em.EmployeeID \nORDER BY \n    e.EmployeeID ASC, \n    e.EndDate ASC;",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "upsert",
+						"upsertSettings": {
+							"useTempDB": true,
+							"keys": [
+								"EmployeeID"
+							]
+						},
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Sql_hanif",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema": "dbo",
+							"tabel_name": "Employee"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "sql_restu",
+						"type": "DatasetReference",
+						"parameters": {
+							"schmea": "dbo",
+							"table_name": "EmployeeSCD2"
+						}
+					}
+				]
+			},
+			{
+				"name": "SCD 3",
+				"type": "Copy",
+				"state": "Inactive",
+				"onInactiveMarkAs": "Succeeded",
+				"dependsOn": [],
+				"policy": {
+					"timeout": "0.12:00:00",
+					"retry": 0,
+					"retryIntervalInSeconds": 30,
+					"secureOutput": false,
+					"secureInput": false
+				},
+				"userProperties": [],
+				"typeProperties": {
+					"source": {
+						"type": "SqlServerSource",
+						"sqlReaderQuery": "WITH empCTE AS (\n    SELECT \n        EmployeeID, \n        MAX(StartDate) AS StartDate\n    FROM \n        Employee\n    GROUP BY \n        EmployeeID\n),\nPreviousPositionCTE AS (\n    SELECT \n        EmployeeID, \n        Position AS PreviousPosition\n    FROM \n        Employee e1\n    WHERE \n        StartDate = (\n            SELECT \n                MAX(StartDate) \n            FROM \n                Employee e2 \n            WHERE \n                e1.EmployeeID = e2.EmployeeID \n                AND e2.StartDate < (\n                    SELECT \n                        MAX(StartDate) \n                    FROM \n                        Employee \n                    WHERE \n                        EmployeeID = e1.EmployeeID\n                )\n        )\n)\nSELECT \n    e.EmployeeID, \n    e.Name, \n    e.Position, \n    COALESCE(p.PreviousPosition, e.Position) AS PreviousPosition,\n    e.StartDate, \n    e.EndDate\nFROM \n    Employee e\nJOIN \n    empCTE em \nON \n    e.EmployeeID = em.EmployeeID \n    AND e.StartDate = em.StartDate\nLEFT JOIN \n    PreviousPositionCTE p \nON \n    e.EmployeeID = p.EmployeeID\nORDER BY \n    e.EmployeeID ASC;",
+						"queryTimeout": "02:00:00",
+						"partitionOption": "None"
+					},
+					"sink": {
+						"type": "SqlServerSink",
+						"writeBehavior": "upsert",
+						"upsertSettings": {
+							"useTempDB": true,
+							"keys": [
+								"EmployeeID"
+							]
+						},
+						"sqlWriterUseTableLock": false
+					},
+					"enableStaging": false,
+					"translator": {
+						"type": "TabularTranslator",
+						"typeConversion": true,
+						"typeConversionSettings": {
+							"allowDataTruncation": true,
+							"treatBooleanAsNumber": false
+						}
+					}
+				},
+				"inputs": [
+					{
+						"referenceName": "Sql_hanif",
+						"type": "DatasetReference",
+						"parameters": {
+							"schema": "dbo",
+							"tabel_name": "Employee"
+						}
+					}
+				],
+				"outputs": [
+					{
+						"referenceName": "sql_restu",
+						"type": "DatasetReference",
+						"parameters": {
+							"schmea": "dbo",
+							"table_name": "EmployeeSCD3"
 						}
 					}
 				]
