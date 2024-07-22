@@ -1,0 +1,15 @@
+{
+	"name": "MongoDB_MasHanif",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "MongoDb_MasHanif",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "MongoDbV2Collection",
+		"schema": [],
+		"typeProperties": {
+			"collection": "documents"
+		}
+	}
+}
