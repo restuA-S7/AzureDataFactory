@@ -75,7 +75,7 @@
 				"          HighestRated = first(title),",
 				"          LowestRated = last(title),",
 				"          NumberOfMovies = count()) ~> aggregate1",
-				"aggregate1 alterRow(updateIf(true())) ~> alterRow1",
+				"aggregate1 alterRow(upsertIf(true())) ~> alterRow1",
 				"alterRow1 sink(allowSchemaDrift: true,",
 				"     validateSchema: false,",
 				"     input(",
